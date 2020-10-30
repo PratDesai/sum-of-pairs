@@ -2,10 +2,11 @@
   (:gen-class))
 
 (defn combo-pairs [nums]
-  (let [fs (drop-last nums)
+  (let [fs (map repeat nums)
         rs (rest nums)
-        ps (take (count rs) (iterate rest rs))]
-    (mapcat (fn [n ps] (map (fn [p] (sort [n p])) ps)) fs ps)))
+        ps (take (count rs) (iterate rest rs))
+        vec->sort (comp sort vector)]
+    (mapcat (fn [n ps] (map vec->sort n ps)) fs ps)))
 
 (defn sum-of-pairs [nums target]
   (->> nums
